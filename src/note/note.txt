@@ -1,0 +1,339 @@
+Let's first of all, understand what a service worker actually is.
+
+Now, this is how our JavaScript code typically behaves.
+
+It runs in a single thread.
+
+That means our Web application, which can consist of multiple pages or in the case of an angular app
+
+with one page only.
+
+This app often uses JavaScript.
+
+And if you are using ANGULAR, you're of course using JavaScript because ANGULAR uses JavaScript.
+
+So this JavaScript code, the entire angular app runs on one single threat and JavaScript has its features
+
+to still handle asynchronous code and not block the execution.
+
+But this is all normal JavaScript.
+
+Now, JavaScript and the browser also offers us to run an additional threat.
+
+We can run a so-called weap worker and a special form of Battisti service worker on another threat.
+
+So this is still then uses one of the same threat.
+
+But it's a different threat than your main JavaScript code.
+
+And the important part is that this threat is kind of decoupled from your HTML pages.
+
+So this means that this can also continue running in the background.
+
+For example, on your mobile phone, that is something mobile browsers typically offer.
+
+This can continue running and it could therefore also do advanced things like receive push notifications.
+
+Take my full progressive Web app course if you want to learn more about this.
+
+But one other crucial thing that a service worker can do is it can manage all your different pages in
+
+case you got multiple pages or you're a single page if you're building an angular app and it can listen
+
+to outgoing network's request so it can listen to you requests going out of your webpage.
+
+For example, if you're fetching the assets off that Web page to see us as code to font JavaScript or
+
+also data from an API, the service worker can catch these outgoing requests and do something with them,
+
+like, for example, cache the responses in a special cache storage or then also return these cached
+
+responses back to your page so that it also works.
+
+If you got no Internet connection, of course, only if there is a cached version available.
+
+This is what the service worker does.
+
+It can be seen as a proxy between your app, your front end app and DDH request you're sending to the
+
+backend.
+
+It proxies that request, which means it catches it does something with it and might then allow it to
+
+still go on and leave the app.
+
+But it could also block this.
+
+Now, configuring such a service worker and writing it from scratch is something you can do and something
+
+you learn in my full progressive web app course there you also learn about features like push notifications
+
+and so on for this video will focus on how Angular can easily add such a service worker to our angular
+
+app because it turns out that there is a special package we can install for that.
+
+Let's quit engy service and now here it's important that you're using the latest Seelie version for
+
+that project and this project does.
+
+And then you can run energy adds to add a third party package.
+
+But that's more than just a NPM library, really some functionality to your app and only some features
+
+can be added because essentially does will execute a command which has to be defined by whichever package
+
+you are targeting.
+
+So not every not even close, not every third party library supports this feature, but there is a special
+
+library which does support it, which you can target with at angular weight.
+
+And if you run this, this will actually configure your existing project to use the angular service
+
+worker package and start with a pre configured service worker.
+
+So does a lot for you.
+
+You can already see it added some things to the index HTML file like the no script section to give a
+
+warning of JavaScript is turned off because we need that.
+
+Of course we need to turn on it loads this manifest here, which is also generated now that is important
+
+for actually having a launcher icon for your app.
+
+If you have it on a mobile phone, you can even save it to the home screen and then started with that
+
+and you can define which icon that should use and so on.
+
+So DataStore manifest adjacent file again.
+
+Learn more in that course I mentioned for us.
+
+Interesting is the app module because in the app module we are using a service worker module which is
+
+imported from at angular service worker.
+
+And this is really an official package of the angular framework and it does what it sounds like.
+
+It registers a service worker, which will be that proxy that catches outgoing requests and does something
+
+with them, and you will learn how to configure what it does to them later in this video.
+
+Of course, we use it here by calling the register method and dare we target dng S.W. worker dot js
+
+file and you won't find that file here.
+
+And the reason.
+
+Your dad is the disk file will actually be auto generated.
+
+It will be generated during the build process and it will be in the disk folder, Darfur, and it will
+
+hold your service worker, which will contain a lot of functionality, which you don't have to and typically
+
+don't want to write on your own.
+
+And here it's all configured to only be added if you're building for production in the assets folder.
+
+We see some icons were added for that manifest adjacent file and in the project folder we see that in
+
+the package to trace the file.
+
+Something changed.
+
+For example, the angular package was added, which includes that angular service worker package.
+
+And we got this NGF config file disaster file where you can configure that service worker, which will
+
+be generated.
+
+But we'll take a closer look at this in a second.
+
+The angular adjacent file, which manages to Seelie project all the was adjusted a little bit there.
+
+Service worker is set to true for the production build.
+
+This is required because the service worker will cache certain resources and to ensure that the newbuild
+
+updates the service worker, these resources will contain a hash and dad will then also be injected
+
+into the service worker, which is why we need to make the build process aware of the fact that we need
+
+a service worker.
+
+This is how it works.
+
+Now, let's simply see that in action, let's create a production build by running energy, build dash,
+
+dash prot.
+
+And this will now bundle and optimize the entire app use ahead of time, computation and so on.
+
+And it will spit out our angular app in a dist folder.
+
+And there we should then also see the service worker.
+
+So let's have a look to close the source tab here.
+
+Let's refresh your statistic folder of the Angler folder for the project.
+
+And there we see that Engy S.W. worker JS file.
+
+You remember that is the file we are importing in the app module here.
+
+We're registering it here.
+
+So this can be found in the disk folder.
+
+Indeed, if we have a look at it, you see there's a lot of code in there because, well, it's actually
+
+pre generated for you to do all that caching and so on in a very efficient way.
+
+And now let's simply do what it lets simply see what it does.
+
+And for that, you need a Web server you can run to host your production.
+
+Appia, you could do it with Engy serve.
+
+It but there will actually not see the service worker in action correctly because it will only build
+
+it in memory.
+
+So therefore what you should do is install a lightweight node server.
+
+And thankfully, there is one, you can install it with NPM, install Dadge to install it globally,
+
+HTP server.
+
+This is a package you can use to launch a simple node based server which will host the content of the
+
+folder you run the command in and to command you need to run is just.
+
+It should be their server, so let's navigate into our disk folder and there in the angular folder and
+
+let's run HTP server and then you can assign a port with the ISP 881, for example, and build and bring
+
+this up.
+
+And now you can Wizzit localhost.
+
+881, and you should see your angular app there.
+
+Now this app looks like a normal app now reloaded once to make sure that the service worker can do its
+
+work and go to application again.
+
+We should now see that under application we got that energy worker running.
+
+And if you don't see that, try reloading the page one more time.
+
+Also, make sure to clear the storage here entirely.
+
+If you worked with service workers and Dysport served on your local domain before now, you should see
+
+that.
+
+The interesting part is if I now take offline again and I reload, it still works, right?
+
+We still see the same content as before, even though we're offline now.
+
+How can that work?
+
+If you go to the network tap and we clear it and we now reload, we see we're making a bunch of requests
+
+here and they're all essentially served from DNG service workers here.
+
+So from the service worker, this is all served.
+
+The interesting part is the Post's request here, probably, which is still kind of can connect to the
+
+outgoing server for that.
+
+Let's again disable Wi-Fi and let's try this again.
+
+And now it just does not work, but what we can see still is that for one, there is a Baggara and intended
+
+behavior in Chrome, which leads to these API requests still going through, even if we simulate offline
+
+mode.
+
+But more interestingly, we see a white page.
+
+We don't see that there is no Internet connection error.
+
+Now, we would not just see a white page, we would see any content we add here.
+
+If we lowered our page, so we essentially see everything that's hard coded into our angular app, the
+
+dynamic content is missing.
+
+We'll take a look at this in a second.
+
+But all the hard coded content is there because what we can see in the network tab, instead we're loading
+
+the main page, the styles, not the font, but the styles, the JavaScript files, all that is loaded
+
+from the service worker and to failing things are the font and our posts.
+
+Let me turn wi fi back on.
+
+And I'll leave that simulation mode, which didn't work too great, I guess, and now, of course,
+
+if I reload, it again works and let's now change something.
+
+First of all, let's change something at the app component there.
+
+I'll add one tech where I say my posts.
+
+Now, let's quit that HP server, go back into the main folder and let's run energy, build dash dash
+
+again and let's see how this now changes the app.
+
+And if I'm right regarding my statement that hard coded content would be cached.
+
+So let's wait for this to finish for that built to finish.
+
+And once it's finished, let's go back into that test folder and there into that angular folder and
+
+let's run our server command again.
+
+So HP server on that port.
+
+Let's reload the application here and you might need to reload twice and you should see my posts.
+
+The reason for that double reload is that the service worker was loaded and the service worker is aware
+
+of the fact that the index HTML file changed or that the script rendering content to it changed.
+
+To be precise, because of that hashing thing.
+
+I mentioned this hash table which is automatically generated and all default having hashes because by
+
+default it would, of course fetch these resources from the cache.
+
+So we would see the old version.
+
+We don't want that.
+
+So we take the new version by or we let us give the new version by using that angular service worker
+
+package, which takes care about that hashing and the fact that the service worker is aware of the new
+
+version for us.
+
+So we get that now if we go offline again, you see that is also part of the loaded page.
+
+And if I go fully offline by treating of wi fi, we still see that.
+
+So now the font and the API call, the API data is missing, I should say.
+
+So that is what I now want to change and to change this and get that same page here when we're offline,
+
+where as I'm getting when I'm online, we need to change the service worker config, which can be done
+
+in DNG as conflict adjacent file.
+
+Now in this file, you can configure how the angular service worker behaves.
+
+So let's take a closer look.
