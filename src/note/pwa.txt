@@ -1,0 +1,22 @@
+add pwa dependency
+    ng add @angular/pwa
+
+after command you can see ngsw-config file added
+this is config file of pwa
+
+and also index.html added few new lines 
+
+
+after build project using
+    ng build --prod 
+
+after we need to install server for deploy app locally
+there is lightweight server for this 
+for use that use below command
+    npm install -g http-server 
+
+after go to build project directory
+    cd dist/angular-pwa
+
+after run app
+    http-server -p 8081
